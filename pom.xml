@@ -21,19 +21,15 @@
   	<hsqldb.version>1.8.0.10</hsqldb.version>
   	<junit.version>4.11</junit.version>
   	<slf4j.version>1.7.5</slf4j.version>
+  	<ojdbc.version>11.2.0.4</ojdbc.version>
   </properties>
   <dependencies>
-  	<dependency>
+<!--   	<dependency>
   		<groupId>org.hibernate</groupId>
   		<artifactId>hibernate-core</artifactId>
   		<version>${hibernate.version}</version>
-  	</dependency>
-  	<!-- <dependency>
-  		<groupId>hsqldb</groupId>
-  		<artifactId>hsqldb</artifactId>
-  		<version>${hsqldb.version}</version>
   	</dependency> -->
-  	<dependency>
+   	<dependency>
   		<groupId>com.zaxxer</groupId>
   		<artifactId>HikariCP</artifactId>
   		<version>${hikaricp.version}</version>
@@ -52,6 +48,16 @@
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>${junit.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>com.oracle</groupId>
+    	<artifactId>ojdbc6</artifactId>
+    	<version>${ojdbc.version}</version>
+    </dependency>
+    <dependency>
+    	<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-entitymanager</artifactId>
+    	<version>${hibernate.version}</version>
     </dependency>
   </dependencies>
 </project>
