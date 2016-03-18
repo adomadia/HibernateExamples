@@ -2,12 +2,17 @@ package org.javamind.entity;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="ITEM")
@@ -15,8 +20,23 @@ public class Item {
 	
 	@Id
 	private Long id;
+	
+	@Column(name="NAME")
+	@NotNull
+	@Size(
+		min=2,
+		max=255,
+		message = "Name is required, maximum 255 characters.")
 	protected String name;
+	
+	@Column(name="BUY_NOW_PRICE")
 	protected BigDecimal buyNowPrice;
+	
+	@Future
+	protected Date auctionEnd;
+	
+	
+	
 	protected Set<Bid> bids = new HashSet<>();
 
 	public Long getId() {
