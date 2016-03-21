@@ -79,13 +79,17 @@ public class HibernateBootstrapExample {
 			.applySetting("hibernate.format_sql", "true")
 			.applySetting("hibernate.user_sql_comments", "true")
 			.applySetting("hibernate.hbm2ddl.auto", "update")
-			.applySetting("hibernate.show_sql", "true");
+			.applySetting("hibernate.show_sql", "true")
+			.applySetting("hibernate.physical_naming_strategy", "org.javamind.entity.shared.CENamingStrategy");
 		
 		ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
 		
 		MetadataSources metadataSources = new MetadataSources(serviceRegistry);
 		
 		metadataSources.addAnnotatedClass(Event.class);
+		//TO add the package-info.java files.
+		metadataSources.addPackage("org.javamind.entity");
+
 
 		MetadataBuilder metadataBuilder = metadataSources.getMetadataBuilder();
 		Metadata metadata = metadataBuilder.build();

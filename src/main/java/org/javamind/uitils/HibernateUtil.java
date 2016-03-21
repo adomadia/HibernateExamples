@@ -17,8 +17,9 @@ public final class HibernateUtil {
 					.configure()
 					.build();
 		try{
-			sessionFactory = new MetadataSources(registry).
-					buildMetadata().buildSessionFactory();
+			sessionFactory = new MetadataSources(registry)
+					.addPackage("org.javamind.entity")
+					.buildMetadata().buildSessionFactory();
 		}
 		catch(Exception e){
 			StandardServiceRegistryBuilder.destroy(registry);

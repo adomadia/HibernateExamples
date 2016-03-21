@@ -6,9 +6,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
@@ -19,6 +22,8 @@ import javax.validation.constraints.Size;
 public class Item {
 	
 	@Id
+	@GeneratedValue(generator="ID_GENERATOR")
+	@Column(name="ITEM_ID")
 	private Long id;
 	
 	@Column(name="NAME")
@@ -33,10 +38,10 @@ public class Item {
 	protected BigDecimal buyNowPrice;
 	
 	@Future
+	@Column(name="AUCTION_END")
 	protected Date auctionEnd;
 	
-	
-	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="item")
 	protected Set<Bid> bids = new HashSet<>();
 
 	public Long getId() {

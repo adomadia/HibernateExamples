@@ -6,21 +6,34 @@ import java.util.StringTokenizer;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
+@org.hibernate.annotations.DynamicInsert
+@org.hibernate.annotations.DynamicUpdate
 public class User implements Serializable{
 	
-	@Column(name="USERNAME")
+	@Id
+	@GeneratedValue(generator="ID_GENERATOR")
+	@Column(name="USER_ID")
+	protected Long id;
+	
+	@Column(name="USER_NAME", unique=true)
 	protected String username;
 	
-	@Column(name="FIRSTNAME")
+	@Column(name="FIRST_NAME")
 	protected String firstname;
 	
-	@Column(name="LASTNAME")
+	@Column(name="LAST_NAME")
 	protected String lastname;
 	
 	public User() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public Long getId() {
+		return id;
 	}
 	
 	public void setUsername(String username) {

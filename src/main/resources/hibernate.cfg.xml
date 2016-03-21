@@ -12,6 +12,13 @@
   <property name="hibernate.show_sql">true</property>
   <property name="hibernate.format_sql">true</property>
   <property name="hibernate.hbm2ddl.auto">update</property>
+  <property name="hibernate.physical_naming_strategy">org.javamind.entity.shared.CENamingStrategy</property>
+ 
   <mapping class="org.javamind.entity.Event"/>
+  <mapping class="org.javamind.entity.User"/>
+  <mapping class="org.javamind.entity.Item"/>
+  <mapping class="org.javamind.entity.Bid"/>
+  <mapping class="org.javamind.entity.ItemBidSummary"/>
+  
  </session-factory>
 </hibernate-configuration>
