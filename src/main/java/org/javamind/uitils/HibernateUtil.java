@@ -27,7 +27,7 @@ public final class HibernateUtil {
 		
 	}
 	
-	protected void tearDown(){
+	public static void tearDown(){
 		if(sessionFactory != null){
 			sessionFactory.close();
 		}
