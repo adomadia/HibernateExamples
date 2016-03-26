@@ -10,6 +10,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -23,7 +24,9 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenerationTime;
+import org.javamind.converter.MonetaryAmountConverter;
 
 
 
@@ -47,7 +50,8 @@ public class Item {
 	
 	@Column(name="BUY_NOW_PRICE",
 			nullable = false)
-	protected BigDecimal buyNowPrice;
+	@Convert(converter=MonetaryAmountConverter.class, disableConversion=false)
+	protected MonetaryAmount buyNowPrice;
 	
 	@Column(name="STARTL_PRICE", 
 			nullable = false, insertable=false)
@@ -73,8 +77,9 @@ public class Item {
 	@Column(
 		name="LAST_MODIFIED", 
 		updatable =false, 
-		insertable=false)
-	@org.hibernate.annotations.Generated(GenerationTime.ALWAYS)
+		insertable=false, columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	//@org.hibernate.annotations.Generated(GenerationTime.ALWAYS)
+	@org.hibernate.annotations.UpdateTimestamp
 	protected Date lastModified;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -103,11 +108,11 @@ public class Item {
 		return name;
 	}
 	
-	public void setBuyNowPrice(BigDecimal buyNowPrice) {
+	public void setBuyNowPrice(MonetaryAmount buyNowPrice) {
 		this.buyNowPrice = buyNowPrice;
 	}
 	
-	public BigDecimal getBuyNowPrice() {
+	public MonetaryAmount getBuyNowPrice() {
 		return buyNowPrice;
 	}
 	

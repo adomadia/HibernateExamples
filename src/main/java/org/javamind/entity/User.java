@@ -7,6 +7,7 @@ import java.util.StringTokenizer;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,10 +15,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.Columns;
+import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.Type;
+import org.javamind.converter.ZipcodeConverter;
 
 @Entity
-@Table(name="USER", uniqueConstraints={@UniqueConstraint(columnNames="USER_NAME", name="UK_USERNAME")})
+@Table(name = "USER", uniqueConstraints = { @UniqueConstraint(columnNames = "USER_NAME", name = "UK_USERNAME") })
 @org.hibernate.annotations.DynamicInsert
 @org.hibernate.annotations.DynamicUpdate
 public class User implements Serializable {
@@ -37,6 +40,7 @@ public class User implements Serializable {
 	protected String lastname;
 
 	@Embedded
+	@Convert(converter=ZipcodeConverter.class, attributeName="city.zipcode")
 	@AttributeOverrides({
 			@AttributeOverride(name = "street", column = @Column(name = "BILLING_STREET")),
 			@AttributeOverride(name = "city.name", column = @Column(name = "BILLING_CITY")),
@@ -46,6 +50,7 @@ public class User implements Serializable {
 	protected Address billingAddress;
 
 	@Embedded
+	@Convert(converter=ZipcodeConverter.class, attributeName="city.zipcode")
 	@AttributeOverrides({
 			@AttributeOverride(name = "street", column = @Column(name = "SHIPPIN_STREET", nullable = false)),
 			@AttributeOverride(name = "city.name", column = @Column(name = "SHIPPING_CITY", nullable = false)),
@@ -53,6 +58,16 @@ public class User implements Serializable {
 			@AttributeOverride(name = "city.zipcode", column = @Column(name = "SHIPPING_ZIPCODE", nullable = false, length = 5)),
 			@AttributeOverride(name = "city.country", column = @Column(name = "SHIPPING_COUNTRY", nullable = false)) })
 	protected Address shippingAddress;
+
+	@Type(type = "yes_no")
+	@Column(name = "IS_ACTIVE", insertable = false, /*nullable = false,*/ columnDefinition = "CHAR(1 CHAR) DEFAULT 'Y'")
+	/*
+	 * NOT WORK FOR BOOLEAN.
+	 * 
+	 * @org.hibernate.annotations.ColumnDefault("Y")
+	 * @org.hibernate.annotations.Generated(GenerationTime.INSERT)
+	 */
+	protected Boolean active;
 
 	public User() {
 		// TODO Auto-generated constructor stub
@@ -102,6 +117,14 @@ public class User implements Serializable {
 
 	public void setShippingAddress(Address shippingAddress) {
 		this.shippingAddress = shippingAddress;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public Boolean isActive() {
+		return active;
 	}
 
 	public BigDecimal calcShippingCosts(Address fromLocation) {

@@ -1,12 +1,14 @@
 package org.javamind.main;
 
 import java.math.BigDecimal;
+import java.util.Currency;
 import java.util.Date;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.javamind.entity.AuctionType;
 import org.javamind.entity.Item;
+import org.javamind.entity.MonetaryAmount;
 import org.javamind.uitils.DateUtil;
 import org.javamind.uitils.HibernateUtil;
 
@@ -20,7 +22,7 @@ public class CreateItemsMain {
 			Item anApple = new Item();
 			Date date = DateUtil.getDateWithDaysAdded(10);
 			anApple.setAuctionEnd(date);
-			anApple.setBuyNowPrice(new BigDecimal(10.00));
+			anApple.setBuyNowPrice(new MonetaryAmount(new BigDecimal(10.00), Currency.getInstance("USD")));
 			anApple.setIntialPrice(new BigDecimal(2.51));
 			anApple.setMetricWeight(20.8);
 			anApple.setName("Crazy Apple");
@@ -29,7 +31,7 @@ public class CreateItemsMain {
 			
 			Item toyCar = new Item();
 			toyCar.setAuctionEnd(DateUtil.getDateWithDaysAdded(15));
-			toyCar.setBuyNowPrice(new BigDecimal(25.99));
+			toyCar.setBuyNowPrice(new MonetaryAmount(new BigDecimal(28.99), Currency.getInstance("EUR")));
 //			toyCar.setIntialPrice(new BigDecimal(2.51));
 			toyCar.setMetricWeight(12);
 			toyCar.setName("Todler Car");
@@ -38,7 +40,7 @@ public class CreateItemsMain {
 			
 			Item shavingCream = new Item();
 			shavingCream.setAuctionEnd(DateUtil.getDateWithDaysAdded(15));
-			shavingCream.setBuyNowPrice(new BigDecimal(15.99));
+			shavingCream.setBuyNowPrice(new MonetaryAmount(new BigDecimal(5.99), Currency.getInstance("USD")));
 			shavingCream.setIntialPrice(new BigDecimal(5.99));
 			shavingCream.setMetricWeight(20);
 			shavingCream.setName("Yummy Yummy Shaving Cream");
@@ -47,7 +49,7 @@ public class CreateItemsMain {
 			
 			Item javaForDummy = new Item();
 			javaForDummy.setAuctionEnd(DateUtil.getDateWithDaysAdded(15));
-			javaForDummy.setBuyNowPrice(new BigDecimal(15.99));
+			javaForDummy.setBuyNowPrice(new MonetaryAmount(new BigDecimal(8.00), Currency.getInstance("EUR")));
 			//javaForDummy.setIntialPrice(new BigDecimal(5.99));
 			javaForDummy.setMetricWeight(10);
 			javaForDummy.setName("Java Book For Dummy");

@@ -16,9 +16,9 @@ public class Address {
 
 	@Embedded
 	@AttributeOverrides({
-		@AttributeOverride(name="city.name", column=@Column(name="CITY")),
-		@AttributeOverride(name="city.zipcode", column=@Column(name="ZIPCODE")),
-		@AttributeOverride(name="city.country", column=@Column(name="COUNTRY"))
+		@AttributeOverride(name="name", column=@Column(name="CITY")),
+		@AttributeOverride(name="zipcode", column=@Column(name="ZIPCODE")),
+		@AttributeOverride(name="country", column=@Column(name="COUNTRY"))
 	})
 	protected City city;
 	
@@ -32,7 +32,7 @@ public class Address {
 
 	public Address(String street, String city, String state, String zipcode, String country){
 		this.street = street;
-		City cty = new City(city, zipcode, country);
+		City cty = new City(city, new Zipcode(zipcode), country);
 		this.city = cty;
 		this.state = state;
 	}

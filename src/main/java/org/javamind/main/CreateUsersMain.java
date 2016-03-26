@@ -1,6 +1,5 @@
 package org.javamind.main;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.javamind.entity.Address;
@@ -8,7 +7,7 @@ import org.javamind.entity.User;
 import org.javamind.uitils.HibernateUtil;
 
 public class CreateUsersMain {
-
+	
 	public static void main(String[] args){
 		
 		Address address = new Address("5220 Crazy Blvd.", "Oklahoma City", "Oklahoma", "73134", "USA");

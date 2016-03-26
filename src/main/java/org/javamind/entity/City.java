@@ -13,7 +13,7 @@ public class City {
 	
 	@NotNull
 	@Column(name="ZIPCODE", nullable=false)
-	protected String zipcode;
+	protected Zipcode zipcode;
 	
 	@NotNull
 	@Column(name="COUNTRY", nullable=false)
@@ -23,7 +23,7 @@ public class City {
 		// TODO Auto-generated constructor stub
 	}
 
-	public City(String city, String zipcode, String country) {
+	public City(String city, Zipcode zipcode, String country) {
 		super();
 		this.name = city;
 		this.zipcode = zipcode;
@@ -38,11 +38,11 @@ public class City {
 		this.name = city;
 	}
 
-	public String getZipcode() {
+	public Zipcode getZipcode() {
 		return zipcode;
 	}
 
-	public void setZipcode(String zipcode) {
+	public void setZipcode(Zipcode zipcode) {
 		this.zipcode = zipcode;
 	}
 
