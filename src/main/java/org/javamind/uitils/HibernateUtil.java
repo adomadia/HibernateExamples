@@ -19,6 +19,7 @@ public final class HibernateUtil {
 		try{
 			sessionFactory = new MetadataSources(registry)
 					.addPackage("org.javamind.entity")
+					.addPackage("org.javamind.typedef")
 					.buildMetadata().buildSessionFactory();
 		}
 		catch(Exception e){

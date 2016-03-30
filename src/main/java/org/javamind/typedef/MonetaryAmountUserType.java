@@ -2,6 +2,7 @@ package org.javamind.typedef;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.util.Properties;
 
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.Type;
 import org.hibernate.usertype.CompositeUserType;
 import org.hibernate.usertype.DynamicParameterizedType;
@@ -53,24 +55,6 @@ public class MonetaryAmountUserType
 	}
 
 	@Override
-	public String[] getPropertyNames() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Type[] getPropertyTypes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object getPropertyValue(Object arg0, int arg1) throws HibernateException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public int hashCode(Object x) throws HibernateException {
 		return x.hashCode();
 	}
@@ -81,16 +65,26 @@ public class MonetaryAmountUserType
 	}
 
 	@Override
-	public Object nullSafeGet(ResultSet arg0, String[] arg1, SessionImplementor arg2, Object arg3)
+	public Object nullSafeGet(ResultSet resultSet, String[] names, SessionImplementor session, Object owner)
 			throws HibernateException, SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		if(resultSet.wasNull()) return null;
+		BigDecimal amount = resultSet.getBigDecimal(names[0]);
+		Currency currency = Currency.getInstance(resultSet.getString(names[1]));
+		return new MonetaryAmount(amount, currency);
 	}
 
 	@Override
-	public void nullSafeSet(PreparedStatement arg0, Object arg1, int arg2, SessionImplementor arg3)
+	public void nullSafeSet(PreparedStatement statement, Object value, int index, SessionImplementor session)
 			throws HibernateException, SQLException {
-		// TODO Auto-generated method stub
+
+		if(value==null){
+			statement.setNull(index, StandardBasicTypes.BIG_DECIMAL.sqlType());
+			statement.setNull(index + 1,  StandardBasicTypes.CURRENCY.sqlType());
+		}
+		MonetaryAmount amount = (MonetaryAmount) value;
+		MonetaryAmount dbAmount =  convert(amount, convertTo);
+		statement.setBigDecimal(index, dbAmount.getValue());
+		statement.setString(index + 1, convertTo.getCurrencyCode());
 		
 	}
 
@@ -105,9 +99,29 @@ public class MonetaryAmountUserType
 	}
 
 	@Override
-	public void setPropertyValue(Object arg0, int arg1, Object arg2) throws HibernateException {
-		// TODO Auto-generated method stub
+	public void setPropertyValue(Object component, int property, Object value) throws HibernateException {
+		throw new UnsupportedOperationException("MonetaryAmount is immutable");
 		
 	}
 
+	@Override
+	public Object getPropertyValue(Object component, int property) throws HibernateException {
+		MonetaryAmount monetaryAmount = (MonetaryAmount)component;
+		if(property == 0) return monetaryAmount.getValue();
+		else return monetaryAmount.getCurrency();
+	}
+	
+	@Override
+	public String[] getPropertyNames() {
+		return new String[]{"value","currency"};
+	}
+
+	@Override
+	public Type[] getPropertyTypes() {
+		return new Type[]{StandardBasicTypes.BIG_DECIMAL, StandardBasicTypes.CURRENCY};
+	}
+
+	protected MonetaryAmount convert(MonetaryAmount amount, Currency toCurrency){
+		return new MonetaryAmount(amount.getValue().multiply(new BigDecimal(2)), toCurrency);
+	}
 }

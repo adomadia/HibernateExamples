@@ -23,7 +23,7 @@ public class CreateItemsMain {
 			Date date = DateUtil.getDateWithDaysAdded(10);
 			anApple.setAuctionEnd(date);
 			anApple.setBuyNowPrice(new MonetaryAmount(new BigDecimal(10.00), Currency.getInstance("USD")));
-			anApple.setIntialPrice(new BigDecimal(2.51));
+			anApple.setStartPrice(new BigDecimal(2.51));
 			anApple.setMetricWeight(20.8);
 			anApple.setName("Crazy Apple");
 			anApple.setAuctionType(AuctionType.HIGHEST_BID);
@@ -32,7 +32,7 @@ public class CreateItemsMain {
 			Item toyCar = new Item();
 			toyCar.setAuctionEnd(DateUtil.getDateWithDaysAdded(15));
 			toyCar.setBuyNowPrice(new MonetaryAmount(new BigDecimal(28.99), Currency.getInstance("EUR")));
-//			toyCar.setIntialPrice(new BigDecimal(2.51));
+//			toyCar.setStartPrice(new BigDecimal(2.51));
 			toyCar.setMetricWeight(12);
 			toyCar.setName("Todler Car");
 			toyCar.setAuctionType(AuctionType.HIGHEST_BID);
@@ -41,7 +41,7 @@ public class CreateItemsMain {
 			Item shavingCream = new Item();
 			shavingCream.setAuctionEnd(DateUtil.getDateWithDaysAdded(15));
 			shavingCream.setBuyNowPrice(new MonetaryAmount(new BigDecimal(5.99), Currency.getInstance("USD")));
-			shavingCream.setIntialPrice(new BigDecimal(5.99));
+			shavingCream.setStartPrice(new BigDecimal(5.99));
 			shavingCream.setMetricWeight(20);
 			shavingCream.setName("Yummy Yummy Shaving Cream");
 			shavingCream.setAuctionType(AuctionType.HIGHEST_BID);
@@ -50,7 +50,7 @@ public class CreateItemsMain {
 			Item javaForDummy = new Item();
 			javaForDummy.setAuctionEnd(DateUtil.getDateWithDaysAdded(15));
 			javaForDummy.setBuyNowPrice(new MonetaryAmount(new BigDecimal(8.00), Currency.getInstance("EUR")));
-			//javaForDummy.setIntialPrice(new BigDecimal(5.99));
+			//javaForDummy.setStartPrice(new BigDecimal(5.99));
 			javaForDummy.setMetricWeight(10);
 			javaForDummy.setName("Java Book For Dummy");
 			//javaForDummy.setAuctionType(AuctionType.HIGHEST_BID);

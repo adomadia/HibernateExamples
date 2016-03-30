@@ -24,7 +24,9 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.Type;
 import org.javamind.converter.MonetaryAmountConverter;
 
 
@@ -38,6 +40,8 @@ public class Item {
 	@Column(name="ITEM_ID")
 	private Long id;
 	
+	
+	
 	@Column(name="NAME")
 	@NotNull
 	@Size(
@@ -47,23 +51,56 @@ public class Item {
 	@Access(AccessType.PROPERTY)
 	protected String name;
 	
+	
+	
 	@Column(name="BUY_NOW_PRICE",
 			nullable = false)
 	@Convert(converter=MonetaryAmountConverter.class, disableConversion=false)
 	protected MonetaryAmount buyNowPrice;
 	
-	@Column(name="STARTL_PRICE", 
+	
+	
+	@Column(name="START_PRICE", 
 			nullable = false, insertable=false)
 	@org.hibernate.annotations.ColumnDefault("1.00")
 	@org.hibernate.annotations.Generated(GenerationTime.INSERT)
-	protected BigDecimal intialPrice;
+	protected BigDecimal startPrice;
+	
+	
+	
+	@NotNull
+	@Columns(
+		columns = {
+			@Column(name="BUY_PRICE_VALUE"),
+			@Column(name="BUY_PRICE_CURRENCY")
+		}
+	)
+	@Type(type="monetary_amount_usd")
+	protected MonetaryAmount buyPrice;
+	
+	
+	
+	@NotNull
+	@Columns(
+			columns = {
+				@Column(name="INITIAL_PRICE_VALUE"),
+				@Column(name="INITIAL_PRICE_CURRENCY")
+			}
+		)
+	@Type(type="monetary_amount_eur")
+	protected MonetaryAmount initialPrice;
+	
+	
 	
 	@Future
 	@Column(name="AUCTION_END")
 	protected Date auctionEnd;
 	
+	
+	
 	@org.hibernate.annotations.Formula(value="SELECT AVG(b.AMOUNT) FROM BID b WHERE b.ITEM_ID = ID")
 	protected BigDecimal averageBidPrice;
+	
 	
 	@Column(name="IMPERIAL_WEIGHT")
 	@org.hibernate.annotations.ColumnTransformer(
@@ -71,6 +108,7 @@ public class Item {
 			write="? * 2.20462"
 	)
 	protected double metricWeight;
+	
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(
@@ -81,19 +119,26 @@ public class Item {
 	@org.hibernate.annotations.UpdateTimestamp
 	protected Date lastModified;
 	
+	
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="CREATED_ON", updatable=false)
 	@org.hibernate.annotations.CreationTimestamp
 	protected Date createdOn;
 
+	
+	
 	@Column(name="AUCTION_TYPE")
 	@NotNull
 	@Enumerated(EnumType.STRING)
     protected AuctionType auctionType = AuctionType.HIGHEST_BID;
 	
+	
+	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="item")
 	protected Set<Bid> bids = new HashSet<>();
 
+	
 	public Long getId() {
 		return id;
 	}
@@ -138,12 +183,12 @@ public class Item {
 		this.auctionEnd = auctionEnd;
 	}
 	
-	public BigDecimal getIntialPrice() {
-		return intialPrice;
+	public BigDecimal getStartPrice() {
+		return startPrice;
 	}
 	
-	public void setIntialPrice(BigDecimal intialPrice) {
-		this.intialPrice = intialPrice;
+	public void setStartPrice(BigDecimal startPrice) {
+		this.startPrice = startPrice;
 	}
 	
 	public BigDecimal getAverageBidPrice() {
@@ -174,5 +219,19 @@ public class Item {
 		return createdOn;
 	}
 	
+	public MonetaryAmount getBuyPrice() {
+		return buyPrice;
+	}
 	
+	public void setBuyPrice(MonetaryAmount buyPrice) {
+		this.buyPrice = buyPrice;
+	}
+	
+	public MonetaryAmount getInitialPrice() {
+		return initialPrice;
+	}
+	
+	public void setInitialPrice(MonetaryAmount initialPrice) {
+		this.initialPrice = initialPrice;
+	}
 }

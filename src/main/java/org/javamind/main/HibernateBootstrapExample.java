@@ -89,6 +89,7 @@ public class HibernateBootstrapExample {
 		metadataSources.addAnnotatedClass(Event.class);
 		//TO add the package-info.java files.
 		metadataSources.addPackage("org.javamind.entity");
+		metadataSources.addPackage("org.javamind.typedef");
 
 
 		MetadataBuilder metadataBuilder = metadataSources.getMetadataBuilder();
