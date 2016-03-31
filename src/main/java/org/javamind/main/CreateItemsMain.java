@@ -23,16 +23,20 @@ public class CreateItemsMain {
 			Date date = DateUtil.getDateWithDaysAdded(10);
 			anApple.setAuctionEnd(date);
 			anApple.setBuyNowPrice(new MonetaryAmount(new BigDecimal(10.00), Currency.getInstance("USD")));
+			anApple.setBuyPrice(new MonetaryAmount(new BigDecimal(10.00), Currency.getInstance("USD")));
+			anApple.setInitialPrice(new MonetaryAmount(new BigDecimal(10.00), Currency.getInstance("USD")));
 			anApple.setStartPrice(new BigDecimal(2.51));
 			anApple.setMetricWeight(20.8);
 			anApple.setName("Crazy Apple");
 			anApple.setAuctionType(AuctionType.HIGHEST_BID);
 			session.save(anApple);
 			
-			Item toyCar = new Item();
+			/*Item toyCar = new Item();
 			toyCar.setAuctionEnd(DateUtil.getDateWithDaysAdded(15));
 			toyCar.setBuyNowPrice(new MonetaryAmount(new BigDecimal(28.99), Currency.getInstance("EUR")));
 //			toyCar.setStartPrice(new BigDecimal(2.51));
+			toyCar.setBuyPrice(new MonetaryAmount(new BigDecimal(21.00), Currency.getInstance("USD")));
+			toyCar.setInitialPrice(new MonetaryAmount(new BigDecimal(34.00), Currency.getInstance("USD")));
 			toyCar.setMetricWeight(12);
 			toyCar.setName("Todler Car");
 			toyCar.setAuctionType(AuctionType.HIGHEST_BID);
@@ -54,7 +58,7 @@ public class CreateItemsMain {
 			javaForDummy.setMetricWeight(10);
 			javaForDummy.setName("Java Book For Dummy");
 			//javaForDummy.setAuctionType(AuctionType.HIGHEST_BID);
-			session.save(javaForDummy);
+			session.save(javaForDummy);*/
 			session.getTransaction().commit();
 		}
 		catch(Exception ex){

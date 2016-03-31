@@ -80,12 +80,14 @@ public class MonetaryAmountUserType
 		if(value==null){
 			statement.setNull(index, StandardBasicTypes.BIG_DECIMAL.sqlType());
 			statement.setNull(index + 1,  StandardBasicTypes.CURRENCY.sqlType());
+			
 		}
-		MonetaryAmount amount = (MonetaryAmount) value;
-		MonetaryAmount dbAmount =  convert(amount, convertTo);
-		statement.setBigDecimal(index, dbAmount.getValue());
-		statement.setString(index + 1, convertTo.getCurrencyCode());
-		
+		else {
+			MonetaryAmount amount = (MonetaryAmount) value;
+			MonetaryAmount dbAmount =  convert(amount, convertTo);
+			statement.setBigDecimal(index, dbAmount.getValue());
+			statement.setString(index + 1, convertTo.getCurrencyCode());
+		}
 	}
 
 	@Override
